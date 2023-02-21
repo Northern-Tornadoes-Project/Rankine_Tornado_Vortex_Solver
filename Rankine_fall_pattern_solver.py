@@ -387,15 +387,15 @@ def run_sim():
 
     #sim_tree_fall(origin)
     render_field_mag()
+
+    cv2.circle(canvas, [int(width / 2), int(height / 2)], int(Rmax / grid_ratio), [255, 0, 255], 2)
+    Vmax = RankineFastLib.solveVmaxRankine(Vr, Vt, Vs, Vcrit, Rmax)
+
+    print("Vmax:", round(Vmax[4]))
     #render_pattern(origin)
     render_pattern_fast(origin)
     #render_fallen_trees()
     #render_field_arrows()
-
-    cv2.circle(canvas, [int(width/2), int(height/2)], int(Rmax / grid_ratio), [255, 0, 255], 3)
-    Vmax = RankineFastLib.solveVmaxRankine(Vr, Vt, Vs, Vcrit, Rmax)
-
-    print("Vmax:", round(Vmax[4]))
 
     update_canvas()
     # origin[1] -= dt * Vs

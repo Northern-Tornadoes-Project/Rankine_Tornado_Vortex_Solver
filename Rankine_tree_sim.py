@@ -228,13 +228,16 @@ def run_sim(offset):
 if __name__ == '__main__':
 
     cv2.namedWindow("sim_window")
-    cv2.createTrackbar("dt", "sim_window", 0, 99,  set_dt)
+    cv2.createTrackbar("dt", "sim_window", 4, 99,  set_dt)
     cv2.createTrackbar("Vt", "sim_window", 36, 100, set_Vt)
     cv2.createTrackbar("Vr", "sim_window", 72, 100, set_Vr)
     cv2.createTrackbar("Vs", "sim_window", 23, 100, set_Vs)
     cv2.createTrackbar("Vcrit", "sim_window", 40, 100, set_Vcrit)
     cv2.createTrackbar("Rmax", "sim_window", 200, 500, set_Rmax)
     cv2.createTrackbar("Grid_Scale", "sim_window", 25, 100, set_grid_scale)
+
+    cv2.putText(canvas, "Press and Hold Enter to Simulate", (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, [255, 0, 0], 2, cv2.LINE_AA)
+    update_canvas()
 
     count = 0
 
