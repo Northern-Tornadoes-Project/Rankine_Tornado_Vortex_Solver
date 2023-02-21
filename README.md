@@ -2,19 +2,19 @@
  A set of tools for graphing, simulating and solving a Rankine tornado vortex and its tree fall pattern
 <br/>
 
-###Daniel Butt, NTP 2023, dbutt7@uwo.ca
+### Daniel Butt, NTP 2023, dbutt7@uwo.ca
 <br/>
 
-####Requirements:
+#### Requirements:
 opencv (pip install opencv-python) <br/>
 numpy (pip install numpy)
 <br/>
 <br/>
-##Grapher
+## Grapher
 ![](grapher.png)
 
-##Simulator
+## Simulator
 ![](Sim_gif.gif)
 
-##Solver
+## Solver
 ![](Solver.png)
