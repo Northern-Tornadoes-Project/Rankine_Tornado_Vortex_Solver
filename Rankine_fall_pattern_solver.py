@@ -15,6 +15,7 @@ Vcrit = 40
 
 width, height = 1001, 1001 #pixels
 canvas = np.zeros((height, width, 3), np.uint8)
+settings_canvas = np.zeros((100, 300, 3), np.uint8)
 
 sim_width, sim_height = 2000, 2000
 grid_ratio = sim_width / width
@@ -324,6 +325,7 @@ def render_pattern_fast(origin):
 def update_canvas():
     cv2.imshow("Rankine Sim", canvas)
     cv2.imshow("Pattern", pattern_canvas)
+    cv2.imshow("sim_window", settings_canvas)
 
 
 def set_Vt(val):
@@ -369,6 +371,7 @@ def run_sim():
     global pattern
     global pattern_canvas
     global canvas
+    global settings_canvas
 
     grid_width = int(sim_width / grid_scale) + 1
     grid_height = int(sim_height / grid_scale) + 1
@@ -390,15 +393,12 @@ def run_sim():
 
     cv2.circle(canvas, [int(width / 2), int(height / 2)], int(Rmax / grid_ratio), [255, 0, 255], 2)
     Vmax = RankineFastLib.solveVmaxRankine(Vr, Vt, Vs, Vcrit, Rmax)
+    settings_canvas = np.zeros((100, 300, 3), np.uint8)
+    cv2.putText(settings_canvas, "Vmax: " + str(round(Vmax[4])), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, [255, 0, 0], 2, cv2.LINE_AA)
 
-    print("Vmax:", round(Vmax[4]))
-    #render_pattern(origin)
     render_pattern_fast(origin)
-    #render_fallen_trees()
-    #render_field_arrows()
 
     update_canvas()
-    # origin[1] -= dt * Vs
 
 
 if __name__ == '__main__':
