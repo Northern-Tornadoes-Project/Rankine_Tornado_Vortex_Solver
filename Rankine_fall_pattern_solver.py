@@ -21,7 +21,7 @@ sim_width, sim_height = 2000, 2000
 grid_ratio = sim_width / width
 grid_scale = 25 #meters
 
-pattern_canvas = np.zeros((grid_scale * 2, width, 1), np.uint8)
+pattern_canvas = np.zeros((grid_scale * 2, width, 3), np.uint8)
 
 grid_width = 0
 grid_height = 0
@@ -297,6 +297,10 @@ def render_pattern(origin):
 
 
 def render_pattern_fast(origin):
+    convergence = RankineFastLib.solveConvergenceRankine(Vt, Vr, Vs, Vcrit, Rmax)
+
+    cv2.line(pattern_canvas, [int(round((convergence[0][0] + sim_width / 2) / grid_ratio)), 0], [int(round((convergence[0][0] + sim_width / 2) / grid_ratio)), pattern_canvas.shape[0]], [0, 0, 255], 1)
+
     for p in pattern:
 
         if p[1] == 0 and p[2] == 0 and p[3] == 0:
@@ -318,7 +322,7 @@ def render_pattern_fast(origin):
         arrow_points = [[int(round(center[0] - scaled_vec[0] / 2)), int(round(center[1] + scaled_vec[1] / 2))],
                         [int(round(center[0] + scaled_vec[0] / 2)), int(round(center[1] - scaled_vec[1] / 2))]]
 
-        cv2.arrowedLine(pattern_canvas, arrow_points[0], arrow_points[1], [255], 1, line_type=cv2.LINE_AA,
+        cv2.arrowedLine(pattern_canvas, arrow_points[0], arrow_points[1], [255, 255, 255], 1, line_type=cv2.LINE_AA,
                         tipLength=0.4)
 
 
@@ -380,7 +384,7 @@ def run_sim():
 
     origin = [grid_width // 2, grid_height // 2]  # // is integer division
 
-    pattern_canvas = np.zeros((grid_scale * 2, width, 1), np.uint8)
+    pattern_canvas = np.zeros((grid_scale * 2, width, 3), np.uint8)
 
     #while origin[1] > grid_height / -2.0:
     generate_field(origin)
@@ -392,7 +396,7 @@ def run_sim():
     render_field_mag()
 
     cv2.circle(canvas, [int(width / 2), int(height / 2)], int(Rmax / grid_ratio), [255, 0, 255], 2)
-    Vmax = RankineFastLib.solveVmaxRankine(Vr, Vt, Vs, Vcrit, Rmax)
+    Vmax = RankineFastLib.solveVmaxRankine(Vt, Vr, Vs, Vcrit, Rmax)
     settings_canvas = np.zeros((100, 300, 3), np.uint8)
     cv2.putText(settings_canvas, "Vmax: " + str(round(Vmax[4])), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, [255, 0, 0], 2, cv2.LINE_AA)
 
