@@ -546,10 +546,10 @@ std::vector<std::array<float, 4>> generatePattern(float width, float gridScale, 
 }
 
 
-std::vector<std::array<float, 6>> matchPattern() {
-    const float observedW = 600.0f;
+std::vector<std::array<float, 6>> matchPattern(std::vector<std::array<float, 2>> p, const float observedW, const float wAbove, const float wBelow) {
+    /*const float observedW = 600.0f;
     const float wAbove = 360.0f;
-    const float wBelow = 240.0f;
+    const float wBelow = 240.0f;*/
     std::array<float, 5> matchedPattern;
     float lowestError = 10000000.0f;
 
@@ -560,7 +560,7 @@ std::vector<std::array<float, 6>> matchPattern() {
 
     bestPatterns.push_back({ 10000000.0f , -1.0f, -1.0f, -1.0f, -1.0f, -1.0f });
 
-    float p[16][2] = { {-0.882947593f, -0.469471563f}, {-0.891006524f, -0.4539905f}, {-0.866025404f, -0.5f}, {-0.121869343f, -0.992546152f}, {-0.087155743f, -0.996194698f}, {0.838670568f, -0.544639035f}, {0.992546152f, 0.121869343f}, {0.809016994f, 0.587785252f}, {0.838670568f, 0.544639035f}, {0.819152044f, 0.573576436f}, {0.838670568f, 0.544639035f}, {0.951056516f, 0.309016994f}, {0.891006524f, 0.4539905f}, {0.838670568f, 0.544639035f}, {0.529919264f, 0.848048096f}, {0.64278761f, 0.766044443f} };
+    //float p[16][2] = { {-0.882947593f, -0.469471563f}, {-0.891006524f, -0.4539905f}, {-0.866025404f, -0.5f}, {-0.121869343f, -0.992546152f}, {-0.087155743f, -0.996194698f}, {0.838670568f, -0.544639035f}, {0.992546152f, 0.121869343f}, {0.809016994f, 0.587785252f}, {0.838670568f, 0.544639035f}, {0.819152044f, 0.573576436f}, {0.838670568f, 0.544639035f}, {0.951056516f, 0.309016994f}, {0.891006524f, 0.4539905f}, {0.838670568f, 0.544639035f}, {0.529919264f, 0.848048096f}, {0.64278761f, 0.766044443f} };
 
 
     omp_set_num_threads(omp_get_num_procs());
@@ -616,7 +616,7 @@ std::vector<std::array<float, 6>> matchPattern() {
                         const std::array<float, 4> pattern2 = solveRankine(c - 0.1f, Vt, Vr, Vs, Vc, Rmax);
                         const float d1 = -p[j][1] * pattern1[2] + p[j][0] * pattern1[3] - 1;
                         const float d2 = -p[j][1] * pattern2[2] + p[j][0] * pattern2[3] - 1;
-                        const float dMin = std::min(d1, d1);
+                        const float dMin = std::min(d1, d2);
                         error += dMin * dMin;
                         j++;
 
