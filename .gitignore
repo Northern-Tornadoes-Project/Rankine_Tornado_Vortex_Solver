@@ -1,4 +1,6 @@
 /wolfram_alpha_calc.PNG
-test.py
 .idea
 FastLibbuild/.vs
+pybind11-2.9.2
+**/FastLibbuild_old/
+FastLibbuild/

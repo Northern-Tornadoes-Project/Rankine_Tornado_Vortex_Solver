@@ -301,6 +301,13 @@ def render_pattern_fast(origin):
 
     cv2.line(pattern_canvas, [int(round((convergence[0][0] + sim_width / 2) / grid_ratio)), 0], [int(round((convergence[0][0] + sim_width / 2) / grid_ratio)), pattern_canvas.shape[0]], [0, 0, 255], 1)
 
+    w = RankineFastLib.solvePatternWidth(Vt, Vr, Vs, Vcrit, Rmax)
+
+    print(w[0], w[1], w[0] - w[1])
+
+    cv2.line(pattern_canvas, [int(round((w[0] + sim_width / 2) / grid_ratio)), 0], [int(round((w[0] + sim_width / 2) / grid_ratio)), pattern_canvas.shape[0]], [0, 0, 255], 1)
+    cv2.line(pattern_canvas, [int(round((w[1] + sim_width / 2) / grid_ratio)), 0], [int(round((w[1] + sim_width / 2) / grid_ratio)), pattern_canvas.shape[0]], [0, 0, 255], 1)
+
     for p in pattern:
 
         if p[1] == 0 and p[2] == 0 and p[3] == 0:
@@ -391,6 +398,8 @@ def run_sim():
 
     #generate_pattern(origin)
     pattern = RankineFastLib.generatePattern(sim_width / 2, grid_scale * grid_ratio, Vt, Vr, Vs, Vcrit, Rmax)
+
+    #print(w[0], w[1])
 
     #sim_tree_fall(origin)
     render_field_mag()
