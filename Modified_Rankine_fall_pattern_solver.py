@@ -241,8 +241,16 @@ def generate_pattern(dx, Vr, Vt, Vs, Vc, Rmax, Phi):
         # solve pattern widths
         w = solve_pattern_width(outer_ellipse_params)
 
+        ic = solve_convergence(inner_ellipse_params, Vr, Vt, False)
+
+        if (asymptotes[2] < w[3] and asymptotes[3] < w[3]) or ic < asymptotes[1]:
+            Xc = ic
+
+        else:
+            Xc = asymptotes[1]
+
         #if only inner solutions exists
-        Xc = solve_convergence(inner_ellipse_params, Vr, Vt, False) if (asymptotes[2] < w[3] and asymptotes[3] < w[3]) else asymptotes[1]
+        #Xc = if (asymptotes[2] < w[3] and asymptotes[3] < w[3]) else asymptotes[1]
 
         # compute pattern
         if asymptotes[2] > w[3]:
@@ -592,7 +600,6 @@ def set_Phi(val):
     val *= 0.05
     val += 0.5
     Phi = max(0.5, val)
-    print(Phi)
     run_sim()
 
 
